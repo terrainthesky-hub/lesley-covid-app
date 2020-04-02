@@ -100,6 +100,28 @@ fig5 = go.Figure(data=[
           ])
 fig5.update_layout(barmode='group')
 
+test_italy = test[test['Country_Region'].str.contains('Italy') & (test['Case_Type'].str.contains('Confirmed'))]
+fig6 = go.Figure(data=[
+    go.Bar(name='Predicted Confirmed Cases', x=test_italy['Date'], y=test_italy['predicted_cases']),
+    go.Bar(name='Actual Confirmed Cases', x=test_italy['Date'], y=test_italy['Cases'])
+          ])
+fig6.update_layout(barmode='group')
+
+test_china = test[test['Country_Region'].str.contains('China') & (test['Case_Type'].str.contains('Confirmed'))]
+fig7 = go.Figure(data=[
+    go.Bar(name='Predicted Confirmed Cases', x=test_china['Date'], y=test_china['predicted_cases']),
+    go.Bar(name='Actual Confirmed Cases', x=test_china['Date'], y=test_china['Cases'])
+          ])
+fig7.update_layout(barmode='group')
+
+test_us = test[test['Country_Region'].str.contains('US') & (test['Case_Type'].str.contains('Confirmed'))]
+fig8 = go.Figure(data=[
+    go.Bar(name='Predicted Confirmed Cases', x=test_us['Date'], y=test_us['predicted_cases']),
+    go.Bar(name='Actual Confirmed Cases', x=test_us['Date'], y=test_us['Cases'])
+          ])
+fig8.update_layout(barmode='group')
+
+
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 app.layout = html.Div(children=[
@@ -109,7 +131,10 @@ app.layout = html.Div(children=[
                  {'label': 'New York', 'value': 'NY'},
                  {'label': 'Florida', 'value': 'FL'},
                  {'label': 'Tenessee', 'value': 'TN'},
-                 {'label': 'Colorado', 'value': 'CO'}
+                 {'label': 'Colorado', 'value': 'CO'},
+                 {'label': 'China', 'value': 'CH'},
+                 {'label': 'Italy', 'value': 'IT'},
+                 {'label': 'United States', 'value': 'US'}
                 ]
     ),
     html.Div(id='my-div', children='''
@@ -131,6 +156,12 @@ def update_chart(dropdown_option):
         return dcc.Graph(figure=fig4)
     if dropdown_option == 'CO':
         return dcc.Graph(figure=fig5)
+    if dropdown_option == 'CH':
+        return dcc.Graph(figure=fig6)
+    if dropdown_option == 'IT':
+        return dcc.Graph(figure=fig7)
+    if dropdown_option == 'US':
+        return dcc.Graph(figure=fig8)
 
 server = app.server
 if __name__ == '__main__':
