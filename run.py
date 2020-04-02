@@ -35,7 +35,6 @@ y_train = train[target]
 X_test = test.drop(columns=['Cases', 'Date'])
 y_test = test[target]
 
-
 import category_encoders as ce
 from sklearn.impute import SimpleImputer
 from sklearn.ensemble import AdaBoostRegressor
